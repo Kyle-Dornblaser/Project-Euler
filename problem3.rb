@@ -1,19 +1,14 @@
 def largest_prime_factor(n)
-  # save time by returning prime numbers
-  return n if prime?(n)
+  target = n
   largest = 0
-
-  max = Math.sqrt(n).ceil
-  for i in 2..max
-    if n % i === 0
-      # factor1 should always be smaller than factor2
-      factor1 = i
-      factor2 = n / i
-      if prime?(factor2)
-        largest = factor2
-      elsif prime?(factor1)
-        largest = factor1
-      end
+  i = 1
+  count = 0
+  while i < target do
+    count = count + 1
+    i += 1
+    if target % i === 0
+      target /= i
+      largest = i if prime?(i)
     end
   end
   largest
