@@ -5,7 +5,6 @@ def largest_prime_factor(n)
 
   max = Math.sqrt(n).ceil
   for i in 2..max
-    puts "#{i}: #{max - i} remaining" if i % 1000 === 0
     if n % i === 0
       # factor1 should always be smaller than factor2
       factor1 = i
