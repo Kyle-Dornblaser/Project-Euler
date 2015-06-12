@@ -23,7 +23,4 @@ def palindrome?(n)
 end
 
 number_to_test = ARGV.first ? ARGV.first.to_i : 3
-time1 = Time.now
 puts largest_palindrome_product(number_to_test)
-time2 = Time.now
-puts time2 - time1
