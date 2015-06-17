@@ -120,61 +120,53 @@ triangle67 = [[59],
             [30, 11, 85, 31, 34, 71, 13, 48,  5, 14, 44,  3, 19, 67, 23, 73, 19, 57,  6, 90, 94, 72, 57, 69, 81, 62, 59, 68, 88, 57, 55, 69, 49, 13,  7, 87, 97, 80, 89,  5, 71,  5,  5, 26, 38, 40, 16, 62, 45, 99, 18, 38, 98, 24, 21, 26, 62, 74, 69,  4, 85, 57, 77, 35, 58, 67, 91, 79, 79, 57, 86, 28, 66, 34, 72, 51, 76, 78, 36, 95, 63, 90,  8, 78, 47, 63, 45, 31, 22, 70, 52, 48, 79, 94, 15, 77, 61, 67, 68],
             [23, 33, 44, 81, 80, 92, 93, 75, 94, 88, 23, 61, 39, 76, 22,  3, 28, 94, 32,  6, 49, 65, 41, 34, 18, 23,  8, 47, 62, 60,  3, 63, 33, 13, 80, 52, 31, 54, 73, 43, 70, 26, 16, 69, 57, 87, 83, 31,  3, 93, 70, 81, 47, 95, 77, 44, 29, 68, 39, 51, 56, 59, 63,  7, 25, 70,  7, 77, 43, 53, 64,  3, 94, 42, 95, 39, 18,  1, 66, 21, 16, 97, 20, 50, 90, 16, 70, 10, 95, 69, 29,  6, 25, 61, 41, 26, 15, 59, 63, 35]]
 
+def generate_path(depth)
+i = 0
+binary = 0
+array = []
+while binary.to_s.length <= depth do
+  binary = "%0#{depth}b" % i
+  positions = binary.to_s.chars.to_a.map { |s| s.to_i }
+  array << positions if positions.size == depth
+  i += 1
+end
+array.uniq
+end
+
 def highest_sum(triangle)
   sum = 0
   position = 0
 
+  path_depth = triangle.size < 20 ? triangle.size : 20
+  paths = generate_path(path_depth)
+
   triangle.each.with_index do |row, row_index|
     look_ahead = []
-    for i in position..position+1 do
-      for j in 0..1 do
-        for k in 0..1 do
-          for l in 0..1 do
-            for m in 0..1 do
-              for n in 0..1 do
-                for o in 0..1 do
-                  for p in 0..1 do
-                    for q in 0..1 do
-                      for r in 0..1 do
-                        for s in 0..1 do
-                          for t in 0..1 do
-                            for u in 0..1 do
-              look_ahead[i - position] ||= []
-              #  puts "Row #{row_index} #{i} #{triangle[row_index][i]}"
-              #  puts "Row #{row_index + 1} #{i + j} #{triangle[row_index + 1][i + j]}"
-              # puts "Row #{row_index + 2} #{i + j + k} #{triangle[row_index + 2][i + j + k]}"
-              # puts "--------"
+    remaining_rows = triangle.size - row_index
+    paths = generate_path(remaining_rows) if remaining_rows < 20
+    paths.each do |path|
+      look_ahead[path.first] ||= []
+      temp_position = position
+      path_sum = 0
+      path.each.with_index do |change, index|
 
-          row1 = triangle[row_index][i] ? triangle[row_index][i] : 0
-          row2 = triangle[row_index + 1] && triangle[row_index + 1][i + j] ? triangle[row_index + 1][i + j] : 0
-          row3 = triangle[row_index + 2] && triangle[row_index + 2][i + j + k] ? triangle[row_index + 2][i + j + k] : 0
-          row4 = triangle[row_index + 3] && triangle[row_index + 3][i + j + k + l] ? triangle[row_index + 3][i + j + k + l] : 0
-          row5 = triangle[row_index + 4] && triangle[row_index + 4][i + j + k + l + m] ? triangle[row_index + 4][i + j + k + l + m] : 0
-          row6 = triangle[row_index + 5] && triangle[row_index + 5][i + j + k + l + m + n] ? triangle[row_index + 5][i + j + k + l + m + n] : 0
-          row7 = triangle[row_index + 6] && triangle[row_index + 6][i + j + k + l + m + n + o] ? triangle[row_index + 6][i + j + k + l + m + n + o] : 0
-          row8 = triangle[row_index + 7] && triangle[row_index + 7][i + j + k + l + m + n + o + p] ? triangle[row_index + 7][i + j + k + l + m + n + o + p] : 0
-          row9 = triangle[row_index + 8] && triangle[row_index + 8][i + j + k + l + m + n + o + p + q] ? triangle[row_index + 8][i + j + k + l + m + n + o + p + q] : 0
-          row10 = triangle[row_index + 9] && triangle[row_index + 9][i + j + k + l + m + n + o + p + q + r] ? triangle[row_index + 9][i + j + k + l + m + n + o + p + q + r] : 0
-          row11 = triangle[row_index + 10] && triangle[row_index + 10][i + j + k + l + m + n + o + p + q + r + s] ? triangle[row_index + 10][i + j + k + l + m + n + o + p + q + r + s] : 0
-          row12 = triangle[row_index + 11] && triangle[row_index + 11][i + j + k + l + m + n + o + p + q + r + s + t] ? triangle[row_index + 11][i + j + k + l + m + n + o + p + q + r + s + t] : 0
-          row13 = triangle[row_index + 12] && triangle[row_index + 12][i + j + k + l + m + n + o + p + q + r + s + t + u] ? triangle[row_index + 12][i + j + k + l + m + n + o + p + q + r + s + t + u] : 0
-
-          look_ahead[i - position] << (row1 + row2 + row3 + row4 + row5 + row6 + row7 + row8 + row9 + row10)
-                            end
-                          end
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
+        temp_position += change
+        number = triangle[row_index + index][temp_position] if triangle[row_index + index]
+        #puts number
+        if number.nil?
+            path_sum = 0
+            break
+            puts "nil"
+        else
+          path_sum += number
         end
+
       end
+      look_ahead[path.first] << path_sum
     end
-    puts '-----'
-    #puts look_ahead.inspect
+    puts "--#{row_index}--" * 3
+    #puts look_ahead[0].sort[0]
+    #puts look_ahead[1].sort[0]
     if look_ahead[0].max >= look_ahead[1].max
         position += 0
         direction = "left"
@@ -182,9 +174,8 @@ def highest_sum(triangle)
       position += 1
       direction = "right"
     end
-
     sum += row[position]
-    #puts "Direction: #{direction} \t Value: #{row[position]}"
+    #puts "Direction: #{direction} \t Pos: #{position} \t Value: #{row[position]}"
   end
   sum
 end
