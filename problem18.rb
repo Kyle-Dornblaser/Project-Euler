@@ -125,36 +125,66 @@ def highest_sum(triangle)
   position = 0
 
   triangle.each.with_index do |row, row_index|
+    look_ahead = []
+    for i in position..position+1 do
+      for j in 0..1 do
+        for k in 0..1 do
+          for l in 0..1 do
+            for m in 0..1 do
+              for n in 0..1 do
+                for o in 0..1 do
+                  for p in 0..1 do
+                    for q in 0..1 do
+                      for r in 0..1 do
+                        for s in 0..1 do
+                          for t in 0..1 do
+                            for u in 0..1 do
+              look_ahead[i - position] ||= []
+              #  puts "Row #{row_index} #{i} #{triangle[row_index][i]}"
+              #  puts "Row #{row_index + 1} #{i + j} #{triangle[row_index + 1][i + j]}"
+              # puts "Row #{row_index + 2} #{i + j + k} #{triangle[row_index + 2][i + j + k]}"
+              # puts "--------"
 
-    if triangle[row_index + 1]
-      look_ahead = []
-      look_ahead[0] = []
-      look_ahead[1] =[]
-      for i in 0..1 do
-        for j in 0..1 do
-          if triangle[row_index][position + i]
-            look_ahead[i][j] = triangle[row_index][position + i] + triangle[row_index + 1][position + j + i]
+          row1 = triangle[row_index][i] ? triangle[row_index][i] : 0
+          row2 = triangle[row_index + 1] && triangle[row_index + 1][i + j] ? triangle[row_index + 1][i + j] : 0
+          row3 = triangle[row_index + 2] && triangle[row_index + 2][i + j + k] ? triangle[row_index + 2][i + j + k] : 0
+          row4 = triangle[row_index + 3] && triangle[row_index + 3][i + j + k + l] ? triangle[row_index + 3][i + j + k + l] : 0
+          row5 = triangle[row_index + 4] && triangle[row_index + 4][i + j + k + l + m] ? triangle[row_index + 4][i + j + k + l + m] : 0
+          row6 = triangle[row_index + 5] && triangle[row_index + 5][i + j + k + l + m + n] ? triangle[row_index + 5][i + j + k + l + m + n] : 0
+          row7 = triangle[row_index + 6] && triangle[row_index + 6][i + j + k + l + m + n + o] ? triangle[row_index + 6][i + j + k + l + m + n + o] : 0
+          row8 = triangle[row_index + 7] && triangle[row_index + 7][i + j + k + l + m + n + o + p] ? triangle[row_index + 7][i + j + k + l + m + n + o + p] : 0
+          row9 = triangle[row_index + 8] && triangle[row_index + 8][i + j + k + l + m + n + o + p + q] ? triangle[row_index + 8][i + j + k + l + m + n + o + p + q] : 0
+          row10 = triangle[row_index + 9] && triangle[row_index + 9][i + j + k + l + m + n + o + p + q + r] ? triangle[row_index + 9][i + j + k + l + m + n + o + p + q + r] : 0
+          row11 = triangle[row_index + 10] && triangle[row_index + 10][i + j + k + l + m + n + o + p + q + r + s] ? triangle[row_index + 10][i + j + k + l + m + n + o + p + q + r + s] : 0
+          row12 = triangle[row_index + 11] && triangle[row_index + 11][i + j + k + l + m + n + o + p + q + r + s + t] ? triangle[row_index + 11][i + j + k + l + m + n + o + p + q + r + s + t] : 0
+          row13 = triangle[row_index + 12] && triangle[row_index + 12][i + j + k + l + m + n + o + p + q + r + s + t + u] ? triangle[row_index + 12][i + j + k + l + m + n + o + p + q + r + s + t + u] : 0
+
+          look_ahead[i - position] << (row1 + row2 + row3 + row4 + row5 + row6 + row7 + row8 + row9 + row10)
+                            end
+                          end
+                        end
+                      end
+                    end
+                  end
+                end
+              end
+            end
           end
         end
       end
-      large_left = look_ahead[0].max ? look_ahead[0].max : 0
-      large_right = look_ahead[1].max ? look_ahead[1].max : 0
-      if large_left >= large_right
+    end
+    puts '-----'
+    #puts look_ahead.inspect
+    if look_ahead[0].max >= look_ahead[1].max
         position += 0
-      else
-        position += 1
-      end
-
+        direction = "left"
     else
-      if triangle[row_index][position] >= triangle[row_index][position + 1]
-        position += 0
-      else
-        position += 1
-      end
+      position += 1
+      direction = "right"
     end
 
     sum += row[position]
-    puts row[position]
+    #puts "Direction: #{direction} \t Value: #{row[position]}"
   end
   sum
 end
