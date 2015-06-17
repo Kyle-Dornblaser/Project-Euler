@@ -136,15 +136,21 @@ end
 def highest_sum(triangle)
   sum = 0
   position = 0
+  default_path_depth = 20
 
-  path_depth = triangle.size < 20 ? triangle.size : 20
+  path_depth = triangle.size < default_path_depth ? triangle.size : default_path_depth
   paths = generate_path(path_depth)
 
-  triangle.each.with_index do |row, row_index|
+  row_index = 0
+  while row_index < triangle.size
     look_ahead = []
     remaining_rows = triangle.size - row_index
-    paths = generate_path(remaining_rows) if remaining_rows < 20
-    paths.each do |path|
+    paths = generate_path(remaining_rows) if remaining_rows < default_path_depth
+
+    best_sum = 0
+    best_position = 0
+    best_path = 0
+    paths.each.with_index do |path, path_index|
       look_ahead[path.first] ||= []
       temp_position = position
       path_sum = 0
@@ -160,25 +166,45 @@ def highest_sum(triangle)
         else
           path_sum += number
         end
+        if path_sum > best_sum
+          best_sum = path_sum
+          best_path = path_index
 
+        end
       end
-      look_ahead[path.first] << path_sum
+
+
+      #look_ahead[path.first] << path_sum
     end
+
     puts "--#{row_index}--" * 3
-    #puts look_ahead[0].sort[0]
-    #puts look_ahead[1].sort[0]
-    if look_ahead[0].max >= look_ahead[1].max
-        position += 0
-        direction = "left"
-    else
-      position += 1
-      direction = "right"
+
+    rows = (paths[best_path].size/2.0).ceil
+    paths[best_path][0...rows].each.with_index do |change, index|
+      position += change
+      number = triangle[row_index + index][position] if triangle[row_index + index]
+      puts number
+      sum += number
     end
-    sum += row[position]
+    row_index += rows
+    #puts look_ahead[0].max
+    #puts look_ahead[1].max
+    #puts best_sum
+    #if look_ahead[0].max >= look_ahead[1].max
+    #    position += 0
+    #    direction = "left"
+    #else
+    #  position += 1
+    #    direction = "right"
+    #end
+    #sum += triangle[row_index][position]
+    #sum += best_sum
+    #position = best_position
+    #row_index += paths.first.size
     #puts "Direction: #{direction} \t Pos: #{position} \t Value: #{row[position]}"
   end
   sum
 end
 start_time = Time.now
-puts highest_sum(triangle2)
+puts highest_sum(triangle67)
 puts "#{Time.now - start_time} seconds."
