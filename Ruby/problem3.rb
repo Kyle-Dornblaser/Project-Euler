@@ -23,4 +23,6 @@ def prime?(n)
 end
 
 number_to_test = ARGV.first ? ARGV.first.to_i : 600851475143
+start_time = Time.now
 puts largest_prime_factor(number_to_test)
+puts "#{Time.now - start_time} seconds."
