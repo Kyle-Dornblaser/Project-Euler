@@ -12,4 +12,6 @@ def even_sum_fibonacci(n = 4000000)
 end
 
 max_fib = ARGV.first ? ARGV.first.to_i : 10
+start_time = Time.now
 puts even_sum_fibonacci(max_fib)
+puts "#{Time.now - start_time} seconds."
