@@ -21,5 +21,9 @@ def prime?(n)
 end
 
 n = ARGV.first ? ARGV.first.to_i : 10001
+start_time = Time.now
 puts "Pn approximately is: #{approximate_nth_prime(n)}"
+puts "#{Time.now - start_time} seconds."
+start_time = Time.now
 puts "Pn is: #{nth_prime(n)}"
+puts "#{Time.now - start_time} seconds."
