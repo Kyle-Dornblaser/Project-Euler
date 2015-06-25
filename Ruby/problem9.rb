@@ -18,4 +18,6 @@ def special_pythagorean_triplet
 end
 
 # Product of triplet
+start_time = Time.now
 puts special_pythagorean_triplet.reduce(:*)
+puts "#{Time.now - start_time} seconds."
