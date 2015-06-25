@@ -6,4 +6,6 @@ def sum_square_difference(n)
 end
 
 max = ARGV.first ? ARGV.first.to_i : 10
+start_time = Time.now
 puts sum_square_difference(max)
+puts "#{Time.now - start_time} seconds."
