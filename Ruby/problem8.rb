@@ -16,4 +16,6 @@ def greatest_product(digits)
 end
 
 digits = ARGV.first ? ARGV.first.to_i : 13
+start_time = Time.now
 puts greatest_product(digits)
+puts "#{Time.now - start_time} seconds."
