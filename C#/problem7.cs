@@ -45,7 +45,7 @@ class Problem7
     return approximate;
   }
 
-  private static bool Prime(int n)
+  public static bool Prime(int n)
   {
     long max = Convert.ToInt64(Math.Ceiling(Math.Sqrt(n)));
     bool prime = true;
